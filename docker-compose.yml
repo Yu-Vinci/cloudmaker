@@ -1,0 +1,17 @@
+services:
+  cloudmaker:
+    build: .
+    image: cloudmaker:1.0
+    container_name: cloudmaker
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${CLOUDMAKER_PORT:-8000}:8000"
+    environment:
+      LIBVIRT_URI: qemu:///system
+      QUOTA_VCPUS: "${QUOTA_VCPUS:-8}"
+      QUOTA_MEMORY_MB: "${QUOTA_MEMORY_MB:-8192}"
+      QUOTA_DISK_GB: "${QUOTA_DISK_GB:-100}"
+    volumes:
+      - /var/run/libvirt:/var/run/libvirt
+      - /var/lib/libvirt/images:/var/lib/libvirt/images
+      - /var/lib/cloudmaker:/var/lib/cloudmaker

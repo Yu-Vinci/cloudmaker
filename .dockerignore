@@ -1,0 +1,6 @@
+.git
+scripts
+docs
+examples
+README.md
+**/__pycache__
