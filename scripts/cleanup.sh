@@ -7,7 +7,9 @@ VM_DIR=/var/lib/libvirt/images/cloudmaker
 VIRSH=(virsh -c qemu:///system)
 
 echo "== VMs and networks created through the API"
+IMAGE_FILES="/var/lib/libvirt/images/noble-base.img"
 if curl -sf "$API/health" >/dev/null; then
+  IMAGE_FILES="$IMAGE_FILES $(curl -s "$API/images" | jq -r '.[].path')"
   for vm in $(curl -s "$API/vms" | jq -r '.[].name'); do
     curl -s -X DELETE "$API/vms/$vm"
     echo "  removed $vm"
@@ -42,6 +44,11 @@ fi
 echo "== Files"
 sudo rm -rf "$VM_DIR" /var/lib/cloudmaker
 if [ "${1:-}" = "--all" ]; then
-  sudo rm -f /var/lib/libvirt/images/noble-base.img
+  for file in $(printf '%s\n' $IMAGE_FILES | sort -u); do
+    sudo rm -f "$file"
+    echo "  removed $file"
+  done
+else
+  echo "  image files are kept, run with --all to delete them too"
 fi
 echo "Done"

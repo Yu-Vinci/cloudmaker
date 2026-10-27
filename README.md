@@ -12,7 +12,7 @@ Numbering follows the assignment.
 * **7. Image registration** with a name, path and description.
 * **9. Quotas** on total vCPU, RAM and disk across all VMs.
 * **11. One check script**: `scripts/check.sh`.
-* **12. Cleanup script**: `scripts/cleanup.sh`.
+* **12. Cleanup script**: `scripts/cleanup.sh` removes VMs, networks, disks, the container and the DB; `scripts/cleanup.sh --all` also deletes the downloaded and registered image files and the Docker image.
 
 Items 4, 8 and 10 are not implemented.
 
@@ -31,7 +31,7 @@ Log out and back in so the new groups take effect, then:
 git clone https://github.com/Yu-Vinci/cloudmaker.git && cd cloudmaker
 scripts/setup-bridge.sh enp0s31f6   # optional, for the bridge part of item 3
 scripts/check.sh
-scripts/cleanup.sh
+scripts/cleanup.sh --all
 ```
 
 Replace `enp0s31f6` with the name of your wired interface (`ip -br link`).

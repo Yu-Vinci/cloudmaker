@@ -284,5 +284,5 @@ section "Summary"
 printf '  %s\n' "${SUMMARY[@]}"
 echo
 echo "  PASS: $PASSED   FAIL: $FAILED   SKIP: $SKIPPED"
-echo "  The service is left running: $API/docs ; full cleanup: scripts/cleanup.sh"
+echo "  The service is left running: $API/docs ; full cleanup: scripts/cleanup.sh --all"
 [ "$FAILED" -eq 0 ]
